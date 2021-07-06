@@ -16,7 +16,6 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import java.util.*
 
-
 class PropertyRepository(private val propertyDao: PropertyDao) {
     private val propertyCollectionRef: CollectionReference =
         FirebaseFirestore.getInstance().collection(PROPERTIES_PATH)

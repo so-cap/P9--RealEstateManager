@@ -6,10 +6,7 @@ import com.sophieoc.realestatemanager.model.Property
 import com.sophieoc.realestatemanager.repository.PropertyRepository
 import com.sophieoc.realestatemanager.ui.propertylist.PropertyListUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -38,7 +35,7 @@ class PropertyViewModel @Inject constructor(private val propertySource: Property
         val property: MutableStateFlow<PropertyUiState>
         = MutableStateFlow(PropertyUiState.Loading)
         viewModelScope.launch {
-            propertySource.getPropertyById(propertyId)
+            propertySource.getPropertyById(propertyId).buffer()
                 .catch { e ->
                      property.value = PropertyUiState.Error(e)
             }
